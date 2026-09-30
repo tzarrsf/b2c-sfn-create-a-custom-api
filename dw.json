@@ -1,0 +1,7 @@
+{
+ "hostname": "{YourInstance}.dx.commercecloud.salesforce.com",
+ "username": "{YourUsername}",
+ "password": "*****************************",
+ "code-version": "activity6",
+ "cartridgesPath": "plugin_custom_api:scapi_hooks"
+}
