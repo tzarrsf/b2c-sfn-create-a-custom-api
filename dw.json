@@ -1,7 +1,7 @@
 {
- "hostname": "{YourInstance}.dx.commercecloud.salesforce.com",
- "username": "{YourUsername}",
- "password": "*****************************",
+ "hostname": "{B2C_subdomain}.dx.commercecloud.salesforce.com",
+ "username": "{B2C_username}",
+ "password": "{B2C_webDAVKey}",
  "code-version": "activity6",
  "cartridgesPath": "plugin_custom_api:scapi_hooks"
 }
