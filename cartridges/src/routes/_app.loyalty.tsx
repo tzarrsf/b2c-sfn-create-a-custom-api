@@ -1,27 +1,39 @@
-// src/routes/_app.loyalty-details.tsx
+// TODO: Add this to src/routes/_app.loyalty.tsx in your SFN project
+
+import { getConfig } from '@salesforce/storefront-next-runtime/config'
+import { getAuth } from '@/middlewares/auth.server'
 import type { LoaderFunctionArgs } from 'react-router'
 import { useLoaderData } from 'react-router'
 
 export async function loader({ context, params }: LoaderFunctionArgs) {
-    const config = context.getConfig()
-    const { shortCode, organizationId } = config.app.commerce.api
-
+    const config = getConfig(context)
+    const auth = getAuth(context)
+    const { shortCode, organizationId } = config.commerce.api
+    const siteId = config.defaultSiteId
+    
     // Use the value in the "id" param as customerId if provided, else fall back
     const customerId = params.id ?? 'customer1'
 
     try {
-        const apiUrl = `https://${shortCode}.api.commercecloud.salesforce.com/custom/loyalty-info/v1/organizations/${organizationId}/customers?c_customer_id=${customerId}&siteId=${config.app.commerce.siteId}&locale=en-US`
+        const apiUrl = `https://${shortCode}.api.commercecloud.salesforce.com/custom/loyalty-info/v1/organizations/${organizationId}/customers?c_customer_id=${customerId}&siteId=${siteId}&locale=en-US`
 
         const response = await fetch(apiUrl, {
             headers: {
-                Authorization: `Bearer ${context.session.accessToken}`,
+                Authorization: `Bearer ${auth.accessToken}`,
                 'Content-Type': 'application/json'
             }
         })
 
         if (!response.ok) {
+            console.log('LOYALTY', response.status, await response.text())
             throw new Error(`HTTP error! Status: ${response.status}`)
         }
+
+        /*
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`)
+        }
+        */
 
         const loyalty = await response.json()
         return { loyalty }
