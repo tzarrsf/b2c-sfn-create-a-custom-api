@@ -59,7 +59,7 @@ paths:
                 not_found:
                   value:
                     {
-                      "type": "https://api.commercecloud.salesforce.com/documentation/error/v1/custom-errors/customer-not-found",
+                      "type": "https://api.commercecloud.salesforce.com/documentation/error/v1/custom-errors/customer-not-found"
                     }
 security:
   - ShopperToken: ["c_loyaltyInfo_r"]
