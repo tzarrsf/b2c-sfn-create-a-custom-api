@@ -36,7 +36,7 @@ export async function loader({ context, params }: LoaderFunctionArgs) {
 }
 
 export default function LoyaltyPage() {
- const { loyaltyData, error } = useLoaderData<typeof loader>()
+ const { loyalty: loyaltyData, error } = useLoaderData<typeof loader>()
 
  if (error) {
    return (
