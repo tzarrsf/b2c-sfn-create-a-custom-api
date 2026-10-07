@@ -51,6 +51,7 @@ export default function LoyaltyDetails() {
             <div>
                 <p><strong>Points:</strong> {loyalty.points}</p>
                 <p><strong>Tier:</strong> {loyalty.tier}</p>
+                <p><strong>Points Expire:</strong> {loyalty.expirationDate}</p>                
             </div>
         </div>
     )

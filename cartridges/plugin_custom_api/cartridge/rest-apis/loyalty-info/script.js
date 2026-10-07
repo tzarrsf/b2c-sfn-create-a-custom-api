@@ -6,14 +6,16 @@ exports.getLoyaltyInfo = function () {
         .getStringValue();
 
  /*
- ... some lookup of loyalty data based on customer id ...
+ ...some integration lookup of loyalty data based on customer id...
  */
 
- if (customerId === "customer1") {
+ if (customerId) {
 
     var info = {
-        tier: "silver",
-        points: 14275
+        customerId: customerId,
+        points: 2500,
+        tier: "Gold",
+        expirationDate: "2026-12-31" 
     };
 
     RESTResponseMgr.createSuccess(info).render();
