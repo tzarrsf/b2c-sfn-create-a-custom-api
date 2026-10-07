@@ -47,10 +47,14 @@ paths:
               schema:
                 type: object
                 properties:
+                  customerId:
+                    type: string
                   tier:
                     type: string
                   points:
                     type: integer
+                  expirationDate:
+                    type: string
         "404":
           description: Shows that the customer is not found
           content:
