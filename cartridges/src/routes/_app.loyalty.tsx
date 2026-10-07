@@ -25,16 +25,9 @@ export async function loader({ context, params }: LoaderFunctionArgs) {
         })
 
         if (!response.ok) {
-            console.log('LOYALTY', response.status, await response.text())
             throw new Error(`HTTP error! Status: ${response.status}`)
         }
-
-        /*
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`)
-        }
-        */
-
+        
         const loyalty = await response.json()
         return { loyalty }
     } catch (err) {
@@ -42,29 +35,57 @@ export async function loader({ context, params }: LoaderFunctionArgs) {
     }
 }
 
-export default function LoyaltyDetails() {
-    const { loyalty, error } = useLoaderData<typeof loader>()
+export default function LoyaltyPage() {
+ const { loyaltyData, error } = useLoaderData<typeof loader>()
 
-    if (error) {
-        return (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                <p className="text-red-800">{error}</p>
-            </div>
-        )
-    }
+ if (error) {
+   return (
+     <div className="container mx-auto px-4 py-8">
+       <h1 className="text-3xl font-bold mb-6">My Loyalty Card</h1>
+       <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+         <p className="text-red-800">Failed to load loyalty data: {error}</p>
+       </div>
+     </div>
+   )
+ }
 
-    if (!loyalty) {
-        return <p className="text-muted-foreground p-4">Loading loyalty details...</p>
-    }
+ if (!loyaltyData) {
+   return (
+     <div className="container mx-auto px-4 py-8">
+       <h1 className="text-3xl font-bold mb-6">My Loyalty Card</h1>
+       <p>Loading...</p>
+     </div>
+   )
+ }
 
-    return (
-        <div className="p-4 bg-muted rounded-xl shadow-md max-w-md">
-            <p className="text-xl font-semibold mb-2">Loyalty Status</p>
-            <div>
-                <p><strong>Points:</strong> {loyalty.points}</p>
-                <p><strong>Tier:</strong> {loyalty.tier}</p>
-                <p><strong>Points Expire:</strong> {loyalty.expirationDate}</p>                
-            </div>
-        </div>
-    )
+ return (
+   <div className="container mx-auto px-4 py-8">
+     <h1 className="text-3xl font-bold mb-6">My Loyalty Card</h1>
+    
+     <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-lg p-8 text-white">
+       <div className="mb-4">
+         <p className="text-sm opacity-80">Customer ID</p>
+         <p className="text-xl font-bold">{loyaltyData.customerId}</p>
+       </div>
+      
+       <div className="mb-4">
+         <p className="text-sm opacity-80">Points Balance</p>
+         <p className="text-4xl font-bold">{loyaltyData.points.toLocaleString()}</p>
+       </div>
+      
+       <div className="grid grid-cols-2 gap-4">
+         <div>
+           <p className="text-sm opacity-80">Tier</p>
+           <p className="text-lg font-semibold">{loyaltyData.tier}</p>
+         </div>
+         <div>
+           <p className="text-sm opacity-80">Points Expire</p>
+           <p className="text-lg font-semibold">{loyaltyData.expirationDate}</p>
+         </div>
+       </div>
+     </div>
+    
+     {/* This is where you can update Tailwind classes to match the SFN training repo's design system */}
+   </div>
+ )
 }
